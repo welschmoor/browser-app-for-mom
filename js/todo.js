@@ -5,6 +5,9 @@ const todoUL = document.querySelector('.todo-ul')
 
 let todoList = []
 
+
+
+
 if (localStorage.getItem('todolist')) {
   const todoArray = JSON.parse(localStorage.getItem('todolist'))
 
@@ -13,24 +16,36 @@ if (localStorage.getItem('todolist')) {
     localStorage.removeItem('todolist')
   }
 
-
-
   todoArray.forEach((each, i) => {
     const todoLI = document.createElement('li')
-    console.log("each", each)
+
     todoLI.textContent = each
     const deleteBtn = document.createElement('button')
     deleteBtn.textContent = "X"
     todoLI.appendChild(deleteBtn)
     todoUL.appendChild(todoLI)
+
     const deleteHandler = (e) => {
       e.target.parentElement.remove()
+      console.log("<>", e.target.parentElement.innerText.slice(0, -1))
+      const noteToDelete = e.target.parentElement.textContent.slice(0, -1)
+      const newSave = todoArray.filter(each=> {
+        console.log("<>comp<>", noteToDelete, each)
+        console.log("bool", each !== noteToDelete)
+        return each !== noteToDelete
+      })
+      console.log(newSave)
+      localStorage.removeItem('todolist')
+      localStorage.setItem('todolist', JSON.stringify(newSave))
     }
     deleteBtn.addEventListener('click', deleteHandler)
 
   })
   todoForm.todoinput.value = ''
 }
+
+
+
 
 
 
@@ -48,7 +63,17 @@ const submitTodoHandler = (e) => {
   todoUL.appendChild(todoLI)
 
   const deleteHandler = (e) => {
+    const todoArray = JSON.parse(localStorage.getItem('todolist'))
     e.target.parentElement.remove()
+    console.log("<>", e.target.parentElement.textContent)
+    const noteToDelete = e.target.parentElement.textContent
+    const newSave = todoArray.filter(each=> {
+      console.log("each", each)
+      each !== noteToDelete
+    })
+    console.log(newSave)
+    localStorage.removeItem('todolist')
+    localStorage.setItem('todolist', JSON.stringify(newSave))
   }
   deleteBtn.addEventListener('click', deleteHandler)
 
