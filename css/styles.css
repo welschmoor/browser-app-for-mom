@@ -1,0 +1,23 @@
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  font-size: 125%;
+  color: white;
+}
+
+h1 {
+  color: blue;
+}
+
+::placeholder {
+  font-size: 1rem;
+}
+
+.hidden {
+  display: none;
+}
